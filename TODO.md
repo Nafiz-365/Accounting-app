@@ -1,2 +1,0 @@
--   [x] Modify loadUserData in App.jsx to seed default accounts if user has no accounts
--   [ ] Test that default accounts are created and journal entries can be saved
