@@ -7,10 +7,13 @@ import {
   DollarSign,
   Calculator,
   TrendingUp,
+  TrendingDown,
   BarChart3,
   Activity,
   Eye,
   EyeOff,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
 import { StatCard } from "../components/cards/StatCard";
 import { NetIncomeTrendChart } from "../components/charts/NetIncomeTrendChart";
@@ -141,113 +144,170 @@ const Dashboard = ({
       <div
         className={`p-3 rounded-2xl ${t.cardBg} ${t.shadow} ${t.border} backdrop-blur-xl transition-all duration-300 hover:shadow-2xl group`}
       >
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-4">
           <div className="flex items-center gap-3">
             <div
-              className={`p-2 rounded-lg ${t.glass} group-hover:scale-110 transition-transform duration-300`}
+              className={`p-3 rounded-xl ${t.glass} group-hover:scale-110 transition-transform duration-300 shadow-lg`}
             >
-              <TrendingUp size={20} className={t.secondaryAccent} />
+              <BarChart3
+                size={24}
+                className={`${t.secondaryAccent} animate-pulse`}
+              />
             </div>
             <div>
               <h3
-                className={`text-xl font-bold ${t.secondaryAccent} bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent`}
+                className={`text-2xl font-bold ${t.secondaryAccent} bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent`}
               >
                 FINANCIAL PERFORMANCE ANALYTICS
               </h3>
               <p className={`text-sm ${t.text} opacity-70 mt-1`}>
-                Advanced profitability tracking and trend analysis across all
-                transactions
+                Real-time profitability tracking with advanced trend analysis
               </p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center text-sm font-medium text-gray-400 glass-card-dark px-3 py-1 rounded-lg">
-              <Calculator
+            <div className="flex items-center text-sm font-medium text-gray-400 glass-card-dark px-3 py-2 rounded-lg border border-white/10">
+              <Activity
                 size={14}
                 className="text-cyan-400 mr-1.5 animate-pulse"
               />
-              Last updated: {new Date().toLocaleTimeString()}
+              <span>Live: {new Date().toLocaleTimeString()}</span>
             </div>
             <button
               onClick={() => setHighlightProfitability(!highlightProfitability)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 ${
+              className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
                 highlightProfitability
-                  ? "bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border border-green-500/30"
-                  : "bg-gray-800/50 text-gray-400 border border-gray-700/50"
+                  ? "bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border border-green-500/30 shadow-lg shadow-green-500/20"
+                  : "bg-gray-800/50 text-gray-400 border border-gray-700/50 hover:bg-gray-700/50"
               } backdrop-blur-sm hover:scale-105`}
             >
-              <Activity size={12} className="inline mr-1" />
-              {highlightProfitability ? "Highlight" : "Normal"}
+              <Activity size={12} className="inline mr-1.5" />
+              {highlightProfitability ? "Profit Focus" : "Standard View"}
             </button>
             <button
               onClick={() => setShowDetailedChart(!showDetailedChart)}
-              className={`p-2 rounded-lg transition-all duration-300 ${
+              className={`p-2.5 rounded-lg transition-all duration-300 ${
                 showDetailedChart
-                  ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                  : "bg-gray-800/50 text-gray-400 border border-gray-700/50"
+                  ? "bg-blue-500/20 text-blue-400 border border-blue-500/30 shadow-lg shadow-blue-500/20"
+                  : "bg-gray-800/50 text-gray-400 border border-gray-700/50 hover:bg-gray-700/50"
               } backdrop-blur-sm hover:scale-105`}
             >
-              {showDetailedChart ? <Eye size={14} /> : <EyeOff size={14} />}
+              {showDetailedChart ? <Eye size={16} /> : <EyeOff size={16} />}
             </button>
           </div>
         </div>
 
-        {/* Statistics Summary */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
+        {/* Enhanced Statistics Summary */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
           <div
-            className={`p-3 rounded-lg ${t.glass} backdrop-blur-sm border border-white/10`}
+            className={`p-4 rounded-xl ${t.glass} backdrop-blur-sm border border-white/10 hover:border-cyan-500/30 transition-all duration-300 hover:scale-105 group`}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-2">
               <span className={`text-xs font-medium ${t.text} opacity-70`}>
                 Total Entries
               </span>
-              <FileText size={14} className={t.accent} />
+              <FileText
+                size={16}
+                className={`${t.accent} group-hover:animate-pulse`}
+              />
             </div>
-            <p className={`text-lg font-bold mt-1 ${t.text}`}>
+            <p className={`text-2xl font-bold ${t.text} mb-1`}>
               {formatNumber(journalEntries.length)}
             </p>
+            <div className="flex items-center gap-1">
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  journalEntries.length > 0 ? "bg-green-400" : "bg-gray-400"
+                } animate-pulse`}
+              ></div>
+              <span
+                className={`text-xs ${
+                  journalEntries.length > 0 ? "text-green-400" : "text-gray-400"
+                }`}
+              >
+                {journalEntries.length > 0 ? "Active" : "No Data"}
+              </span>
+            </div>
           </div>
+
           <div
-            className={`p-3 rounded-lg ${t.glass} backdrop-blur-sm border border-white/10`}
+            className={`p-4 rounded-xl ${t.glass} backdrop-blur-sm border border-white/10 hover:border-green-500/30 transition-all duration-300 hover:scale-105 group`}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-2">
               <span className={`text-xs font-medium ${t.text} opacity-70`}>
                 Current Net Income
               </span>
               <DollarSign
-                size={14}
-                className={netIncome >= 0 ? "text-green-400" : "text-red-400"}
+                size={16}
+                className={
+                  netIncome >= 0
+                    ? "text-green-400 group-hover:animate-pulse"
+                    : "text-red-400 group-hover:animate-pulse"
+                }
               />
             </div>
             <p
-              className={`text-lg font-bold mt-1 ${
+              className={`text-2xl font-bold mb-1 ${
                 netIncome >= 0 ? "text-green-400" : "text-red-400"
               }`}
             >
               {formatAmount(netIncome)}
             </p>
+            <div className="flex items-center gap-1">
+              {netIncome >= 0 ? (
+                <>
+                  <TrendingUp size={12} className="text-green-400" />
+                  <span className="text-xs text-green-400">Profitable</span>
+                </>
+              ) : (
+                <>
+                  <TrendingDown size={12} className="text-red-400" />
+                  <span className="text-xs text-red-400">Loss</span>
+                </>
+              )}
+            </div>
           </div>
+
           <div
-            className={`p-3 rounded-lg ${t.glass} backdrop-blur-sm border border-white/10`}
+            className={`p-4 rounded-xl ${t.glass} backdrop-blur-sm border border-white/10 hover:border-blue-500/30 transition-all duration-300 hover:scale-105 group`}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mb-2">
               <span className={`text-xs font-medium ${t.text} opacity-70`}>
-                Trend Status
+                Total Revenue
               </span>
-              <BarChart3
-                size={14}
-                className={
-                  journalEntries.length > 1 ? "text-cyan-400" : "text-gray-400"
-                }
+              <ArrowUp
+                size={16}
+                className="text-green-400 group-hover:animate-pulse"
               />
             </div>
-            <p
-              className={`text-lg font-bold mt-1 ${
-                journalEntries.length > 1 ? "text-cyan-400" : "text-gray-400"
-              }`}
-            >
-              {journalEntries.length > 1 ? "Active" : "No Data"}
+            <p className={`text-2xl font-bold text-green-400 mb-1`}>
+              {formatAmount(incomeStatement.revenue)}
             </p>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+              <span className="text-xs text-green-400">Income Stream</span>
+            </div>
+          </div>
+
+          <div
+            className={`p-4 rounded-xl ${t.glass} backdrop-blur-sm border border-white/10 hover:border-red-500/30 transition-all duration-300 hover:scale-105 group`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className={`text-xs font-medium ${t.text} opacity-70`}>
+                Total Expenses
+              </span>
+              <ArrowDown
+                size={16}
+                className="text-red-400 group-hover:animate-pulse"
+              />
+            </div>
+            <p className={`text-2xl font-bold text-red-400 mb-1`}>
+              {formatAmount(incomeStatement.expenses)}
+            </p>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></div>
+              <span className="text-xs text-red-400">Cost Center</span>
+            </div>
           </div>
         </div>
 
@@ -263,11 +323,22 @@ const Dashboard = ({
         )}
 
         {!showDetailedChart && (
-          <div className={`text-center py-4 ${t.text} opacity-70`}>
-            <EyeOff size={24} className="mx-auto mb-2 opacity-50" />
-            <p className="text-sm">
-              Chart is hidden. Click the eye icon to show the trend analysis.
+          <div className={`text-center py-8 ${t.text} opacity-70`}>
+            <div className="relative inline-block">
+              <EyeOff size={48} className="mx-auto mb-4 opacity-50" />
+              <div className="absolute -top-2 -right-2 w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
+            </div>
+            <p className="text-lg font-medium mb-2">Chart View Hidden</p>
+            <p className="text-sm opacity-70 max-w-md mx-auto">
+              Click the eye icon above to reveal comprehensive trend analysis
+              and performance metrics
             </p>
+            <button
+              onClick={() => setShowDetailedChart(true)}
+              className="mt-4 px-4 py-2 bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-lg hover:bg-cyan-500/30 transition-all duration-300 hover:scale-105"
+            >
+              Show Analytics
+            </button>
           </div>
         )}
       </div>

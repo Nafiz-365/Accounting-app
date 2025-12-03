@@ -77,7 +77,9 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
 
         const response = await authAPI.login(formData.email, formData.password);
 
-        setSuccessMessage(`Welcome back, ${response.user.name}! Redirecting...`);
+        setSuccessMessage(
+          `Welcome back, ${response.user.name}! Redirecting...`
+        );
         setTimeout(() => {
           onLogin({
             name: response.user.name,
@@ -158,51 +160,11 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
       </div>
 
       <div
-        className={`w-full max-w-md ${t.cardBg} ${t.shadow} rounded-2xl p-8 border ${t.border}`}
+        className={`w-full max-w-md ${t.cardBg} ${t.shadow} rounded-2xl p-6 border ${t.border}`}
       >
         {/* Enhanced Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center items-center gap-3 mb-4">
-            <div
-              className={`p-3 rounded-2xl ${
-                theme === "dark"
-                  ? "bg-gradient-to-br from-cyan-500/20 to-blue-500/20"
-                  : "bg-gradient-to-br from-cyan-500/10 to-blue-500/10"
-              } backdrop-blur-sm border border-current/20 shadow-lg transform hover:scale-110 transition-all duration-300`}
-            >
-              <Calculator
-                size={32}
-                className={theme === "dark" ? "text-cyan-400" : "text-blue-500"}
-              />
-            </div>
-            <div
-              className={`p-3 rounded-2xl ${
-                theme === "dark"
-                  ? "bg-gradient-to-br from-blue-500/20 to-purple-500/20"
-                  : "bg-gradient-to-br from-blue-500/10 to-purple-500/10"
-              } backdrop-blur-sm border border-current/20 shadow-lg transform hover:scale-110 transition-all duration-300`}
-            >
-              <Building2
-                size={32}
-                className={theme === "dark" ? "text-blue-400" : "text-cyan-500"}
-              />
-            </div>
-            <div
-              className={`p-3 rounded-2xl ${
-                theme === "dark"
-                  ? "bg-gradient-to-br from-purple-500/20 to-pink-500/20"
-                  : "bg-gradient-to-br from-purple-500/10 to-pink-500/10"
-              } backdrop-blur-sm border border-current/20 shadow-lg transform hover:scale-110 transition-all duration-300`}
-            >
-              <Gem
-                size={32}
-                className={
-                  theme === "dark" ? "text-purple-400" : "text-pink-500"
-                }
-              />
-            </div>
-          </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-3 animate-pulse">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-2 animate-pulse">
             FinanceFlow Pro
           </h1>
           <p
@@ -212,15 +174,15 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
           >
             {isLoginView ? (
               <span className="flex items-center justify-center gap-2">
-                <Sparkles size={16} className="text-cyan-400" />
+                <Sparkles size={14} className="text-cyan-400" />
                 Welcome back! Sign in to access your financial dashboard
-                <Sparkles size={16} className="text-cyan-400" />
+                <Sparkles size={14} className="text-cyan-400" />
               </span>
             ) : (
               <span className="flex items-center justify-center gap-2">
-                <Zap size={16} className="text-blue-400" />
+                <Zap size={14} className="text-blue-400" />
                 Create your account and start managing finances like a pro
-                <Zap size={16} className="text-blue-400" />
+                <Zap size={14} className="text-blue-400" />
               </span>
             )}
           </p>
@@ -228,21 +190,21 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
 
         {/* Success Message */}
         {successMessage && (
-          <div className="mb-4 p-3 bg-lime-900/50 border border-lime-500 text-lime-300 rounded-lg font-medium text-sm flex items-center gap-2">
-            <CheckCircle size={16} className="text-lime-400" />
+          <div className="mb-3 p-2 bg-lime-900/50 border border-lime-500 text-lime-300 rounded-lg font-medium text-sm flex items-center gap-2">
+            <CheckCircle size={14} className="text-lime-400" />
             {successMessage}
           </div>
         )}
 
         {/* Error Message */}
         {errorMessage && (
-          <div className="mb-4 p-3 bg-red-900/50 border border-red-500 text-red-300 rounded-lg flex items-center font-medium text-sm">
-            <AlertTriangle size={16} className="mr-2" />
+          <div className="mb-3 p-2 bg-red-900/50 border border-red-500 text-red-300 rounded-lg flex items-center font-medium text-sm">
+            <AlertTriangle size={14} className="mr-2" />
             {errorMessage}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3">
           {!isLoginView && (
             <div>
               <label className={`block text-xs font-medium mb-1 ${t.text}`}>
@@ -262,7 +224,7 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
                   type="text"
                   required
                   value={formData.name}
-                  className={`w-full pl-10 pr-3 py-3 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
+                  className={`w-full pl-10 pr-3 py-2 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
                   placeholder="Enter your full name"
                   onFocus={() => setFocusedField("name")}
                   onBlur={() => setFocusedField("")}
@@ -295,7 +257,7 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
                 type="email"
                 required
                 value={formData.email}
-                className={`w-full pl-10 pr-3 py-3 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
+                className={`w-full pl-10 pr-3 py-2 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
                 placeholder="your.email@example.com"
                 onFocus={() => setFocusedField("email")}
                 onBlur={() => setFocusedField("")}
@@ -327,7 +289,7 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
                 type={showPassword ? "text" : "password"}
                 required
                 value={formData.password}
-                className={`w-full pl-10 pr-12 py-3 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
+                className={`w-full pl-10 pr-12 py-2 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
                 placeholder="Create a strong password"
                 onFocus={() => setFocusedField("password")}
                 onBlur={() => setFocusedField("")}
@@ -341,15 +303,15 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-3 text-slate-400 hover:text-cyan-400 transition-colors duration-300"
+                className="absolute right-3 top-2.5 text-slate-400 hover:text-cyan-400 transition-colors duration-300"
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </div>
 
             {/* Password Strength Indicator */}
             {!isLoginView && formData.password && (
-              <div className="mt-2 space-y-1">
+              <div className="mt-1.5 space-y-1">
                 <div className="flex items-center gap-2">
                   <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                     <div
@@ -424,14 +386,14 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
                 }`}
               >
                 <Lock
-                  size={18}
-                  className="absolute left-3 top-3 text-slate-400 transition-colors duration-300"
+                  size={16}
+                  className="absolute left-2 top-2 text-slate-400 transition-colors duration-300"
                 />
                 <input
                   type={showConfirmPassword ? "text" : "password"}
                   required
                   value={formData.confirmPassword}
-                  className={`w-full pl-10 pr-12 py-3 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
+                  className={`w-full pl-8 pr-10 py-2 border rounded-xl ${t.input} transition-all duration-300 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500`}
                   placeholder="Confirm your password"
                   onFocus={() => setFocusedField("confirmPassword")}
                   onBlur={() => setFocusedField("")}
@@ -445,19 +407,19 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-3 text-slate-400 hover:text-cyan-400 transition-colors duration-300"
+                  className="absolute right-2 top-1.5 text-slate-400 hover:text-cyan-400 transition-colors duration-300"
                 >
                   {showConfirmPassword ? (
-                    <EyeOff size={18} />
+                    <EyeOff size={14} />
                   ) : (
-                    <Eye size={18} />
+                    <Eye size={14} />
                   )}
                 </button>
               </div>
               {formData.confirmPassword &&
                 formData.password !== formData.confirmPassword && (
-                  <p className="text-red-400 text-xs mt-1 flex items-center gap-1">
-                    <AlertTriangle size={12} />
+                  <p className="text-red-400 text-xs mt-0.5 flex items-center gap-0.5">
+                    <AlertTriangle size={10} />
                     Passwords do not match
                   </p>
                 )}
@@ -467,18 +429,16 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
           {/* Security Tip for Login */}
           {isLoginView && showSecurityTip && (
             <div
-              className={`p-3 rounded-lg ${
+              className={`p-2 rounded-lg ${
                 theme === "dark"
                   ? "bg-blue-900/20 border-blue-500/30"
                   : "bg-blue-50 border-blue-200"
-              } border text-xs ${
-                theme === "dark" ? "text-blue-300" : "text-blue-700"
-              } flex items-start gap-2`}
+              } border text-blue-700 flex items-start gap-2`}
             >
-              <Shield size={14} className="mt-0.5 flex-shrink-0" />
+              <Shield size={10} className="mt-0.5 flex-shrink-0" />
               <div className="flex-1">
-                <p className="font-medium mb-1">Security Tip</p>
-                <p className="opacity-80">
+                <p className="font-medium mb-0.5 text-sm">Security Tip</p>
+                <p className="opacity-80 text-xs">
                   Use a strong password with letters, numbers, and symbols.
                 </p>
               </div>
@@ -515,7 +475,7 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full py-4 mt-6 rounded-xl font-bold tracking-wider flex items-center justify-center gap-3 transition-all duration-300 transform relative overflow-hidden ${
+            className={`w-full py-3 mt-4 rounded-xl font-bold tracking-wider flex items-center justify-center gap-3 transition-all duration-300 transform relative overflow-hidden ${
               isLoading
                 ? "bg-gray-400 cursor-not-allowed"
                 : `${t.buttonPrimary} hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]`
@@ -527,22 +487,22 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
             )}
             {isLoading ? (
               <>
-                <Loader2 size={20} className="animate-spin" />
+                <Loader2 size={18} className="animate-spin" />
                 {isLoginView ? "Authenticating..." : "Creating Account..."}
               </>
             ) : (
               <>
                 {isLoginView ? (
                   <>
-                    <LogIn size={20} />
+                    <LogIn size={18} />
                     Sign In to Dashboard
-                    <ArrowRight size={20} />
+                    <ArrowRight size={18} />
                   </>
                 ) : (
                   <>
-                    <UserPlus size={20} />
+                    <UserPlus size={18} />
                     Create My Account
-                    <Sparkles size={20} />
+                    <Sparkles size={18} />
                   </>
                 )}
               </>
@@ -550,9 +510,9 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
           </button>
         </form>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <div
-            className={`p-4 rounded-xl ${
+            className={`p-3 rounded-xl ${
               theme === "dark"
                 ? "bg-gray-800/50 border-gray-700"
                 : "bg-gray-50 border-gray-200"
@@ -561,7 +521,7 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
             <p
               className={`text-sm ${
                 theme === "dark" ? "text-gray-400" : "text-gray-600"
-              } mb-3`}
+              } mb-2`}
             >
               {isLoginView
                 ? "New to FinanceFlow Pro?"
@@ -574,7 +534,7 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
                 setSuccessMessage("");
                 setShowSecurityTip(true);
               }}
-              className={`inline-flex items-center gap-2 px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
+              className={`inline-flex items-center gap-2 px-5 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 ${
                 theme === "dark"
                   ? "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500/30 hover:to-blue-500/30 text-cyan-400 border border-cyan-500/30"
                   : "bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:from-cyan-500/20 hover:to-blue-500/20 text-cyan-600 border border-cyan-300"
@@ -598,13 +558,13 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
         </div>
 
         {/* Security Badge */}
-        <div className="mt-6 flex items-center justify-center gap-4 text-xs">
+        <div className="mt-4 flex items-center justify-center gap-4 text-xs">
           <div
             className={`flex items-center gap-1 ${
               theme === "dark" ? "text-gray-400" : "text-gray-600"
             }`}
           >
-            <Shield size={12} className="text-green-400" />
+            <Shield size={10} className="text-green-400" />
             <span>Secure 256-bit encryption</span>
           </div>
           <div
@@ -612,13 +572,13 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
               theme === "dark" ? "text-gray-400" : "text-gray-600"
             }`}
           >
-            <CheckCircle size={12} className="text-blue-400" />
+            <CheckCircle size={10} className="text-blue-400" />
             <span>GDPR compliant</span>
           </div>
         </div>
 
         {/* Footer Info */}
-        <div className="mt-4 text-center">
+        <div className="mt-3 text-center">
           <p
             className={`text-xs ${
               theme === "dark" ? "text-gray-500" : "text-gray-400"
