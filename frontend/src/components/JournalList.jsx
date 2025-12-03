@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Edit2, Trash2, Calendar, FileText, TrendingUp } from "lucide-react";
-import { useCurrency } from "../contexts/CurrencyContext";
+import { CurrencyContext } from "../contexts/CurrencyContext";
 
 // Accepts editEntry, deleteEntry, and isAdjusting props
 const JournalList = ({
@@ -11,7 +11,7 @@ const JournalList = ({
   deleteEntry,
   isAdjusting,
 }) => {
-  const { formatAmount } = useCurrency();
+  const { formatAmount } = useContext(CurrencyContext);
   return (
     <div className="space-y-4">
       {entries.length === 0 ? (

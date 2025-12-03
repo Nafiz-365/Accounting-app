@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 import {
   getCurrencyByCode,
   formatCurrency,
@@ -7,24 +7,11 @@ import {
 
 const CurrencyContext = createContext();
 
-export const useCurrency = () => {
-  const context = useContext(CurrencyContext);
-  if (!context) {
-    throw new Error("useCurrency must be used within a CurrencyProvider");
-  }
-  return context;
-};
-
 export const CurrencyProvider = ({ children }) => {
-  const [currency, setCurrency] = useState("USD");
-
-  // Load saved currency on mount
-  useEffect(() => {
+  const [currency, setCurrency] = useState(() => {
     const savedCurrency = localStorage.getItem("selectedCurrency");
-    if (savedCurrency) {
-      setCurrency(savedCurrency);
-    }
-  }, []);
+    return savedCurrency || "USD";
+  });
 
   const handleCurrencyChange = (newCurrency) => {
     setCurrency(newCurrency);
@@ -71,4 +58,5 @@ export const CurrencyProvider = ({ children }) => {
   );
 };
 
+export { CurrencyContext };
 export default CurrencyContext;

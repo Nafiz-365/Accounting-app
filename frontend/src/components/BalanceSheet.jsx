@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import {
   Scale,
   TrendingUp,
@@ -16,7 +16,7 @@ import {
   Shield,
   Printer,
 } from "lucide-react";
-import { useCurrency } from "../contexts/CurrencyContext";
+import { CurrencyContext } from "../contexts/CurrencyContext";
 
 const BalanceSheet = ({
   accounts,
@@ -27,7 +27,7 @@ const BalanceSheet = ({
   incomeStatement,
   t,
 }) => {
-  const { formatAmount, formatNumber } = useCurrency();
+  const { formatAmount, formatNumber } = useContext(CurrencyContext);
   const [showDetails, setShowDetails] = useState(true);
 
   const totalAssets = getTotalAssets();

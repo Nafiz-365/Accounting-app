@@ -1,0 +1,6 @@
+node_modules/
+accounting.db
+accounting.db-journal
+.env
+*.log
+

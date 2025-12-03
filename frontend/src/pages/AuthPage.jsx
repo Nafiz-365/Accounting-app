@@ -25,9 +25,7 @@ import {
   Sparkles,
   Gem,
 } from "lucide-react";
-
-// Key for local storage (changed to store an array of users)
-const USERS_STORAGE_KEY = "SMART_ACCOUNTING_USERS";
+import { authAPI } from "../utils/api";
 
 const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
   const [isLoginView, setIsLoginView] = useState(true);
@@ -68,108 +66,76 @@ const AuthPage = ({ onLogin, theme, toggleTheme, t }) => {
     setSuccessMessage("");
     setIsLoading(true);
 
-    // Simulate API call delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      if (isLoginView) {
+        // --- LOGIN LOGIC ---
+        if (!formData.email || !formData.password) {
+          setErrorMessage("Please fill in all required fields.");
+          setIsLoading(false);
+          return;
+        }
 
-    // Retrieve the array of stored users (or initialize an empty array)
-    const storedUsers =
-      JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
+        const response = await authAPI.login(formData.email, formData.password);
 
-    if (isLoginView) {
-      // --- LOGIN LOGIC (Checking against all registered users) ---
+        setSuccessMessage(`Welcome back, ${response.user.name}! Redirecting...`);
+        setTimeout(() => {
+          onLogin({
+            name: response.user.name,
+            email: response.user.email,
+            role: "Administrator",
+          });
+        }, 1500);
+      } else {
+        // --- REGISTRATION LOGIC ---
+        // Validate form fields
+        if (!formData.name || !formData.email || !formData.password) {
+          setErrorMessage("Please fill in all required fields.");
+          setIsLoading(false);
+          return;
+        }
 
-      // Find a user matching both email and password
-      const foundUser = storedUsers.find(
-        (user) =>
-          user.email === formData.email && user.password === formData.password
-      );
+        // Password confirmation check
+        if (formData.password !== formData.confirmPassword) {
+          setErrorMessage(
+            "Passwords do not match. Please confirm your password."
+          );
+          setIsLoading(false);
+          return;
+        }
 
-      if (!foundUser) {
-        setErrorMessage(
-          "Invalid credentials. Please check your email and password."
+        // Password strength check
+        if (passwordStrength < 2) {
+          setErrorMessage(
+            "Password is too weak. Please include uppercase, lowercase, numbers, and special characters."
+          );
+          setIsLoading(false);
+          return;
+        }
+
+        await authAPI.register(
+          formData.name,
+          formData.email,
+          formData.password
+        );
+
+        // Show success message and switch to login view
+        setSuccessMessage(
+          `Account created successfully for ${formData.name}! Please login to continue.`
         );
         setIsLoading(false);
-        return;
+        setTimeout(() => {
+          setIsLoginView(true);
+          setFormData({
+            name: "",
+            email: formData.email,
+            password: "",
+            confirmPassword: "",
+          });
+        }, 2000);
       }
-
-      // Successful login: Use the stored user's full name
-      setSuccessMessage(`Welcome back, ${foundUser.name}! Redirecting...`);
-      setTimeout(() => {
-        onLogin({
-          name: foundUser.name,
-          email: foundUser.email,
-          role: foundUser.role || "Administrator",
-        });
-      }, 1500);
-    } else {
-      // --- REGISTRATION LOGIC (Adding a new user to the array) ---
-
-      // Check if email already exists
-      const existingUser = storedUsers.find(
-        (user) => user.email === formData.email
-      );
-
-      if (existingUser) {
-        setErrorMessage(
-          "This email is already registered. Please use a different email or login."
-        );
-        setIsLoading(false);
-        return;
-      }
-
-      // Validate form fields
-      if (!formData.name || !formData.email || !formData.password) {
-        setErrorMessage("Please fill in all required fields.");
-        setIsLoading(false);
-        return;
-      }
-
-      // Password confirmation check
-      if (formData.password !== formData.confirmPassword) {
-        setErrorMessage(
-          "Passwords do not match. Please confirm your password."
-        );
-        setIsLoading(false);
-        return;
-      }
-
-      // Password strength check
-      if (passwordStrength < 2) {
-        setErrorMessage(
-          "Password is too weak. Please include uppercase, lowercase, numbers, and special characters."
-        );
-        setIsLoading(false);
-        return;
-      }
-
-      // Create new user object
-      const newUser = {
-        id: Date.now(),
-        name: formData.name,
-        email: formData.email,
-        password: formData.password, // Storing plain password for simulation
-        createdAt: new Date().toISOString(),
-        lastLogin: null,
-      };
-
-      // Add new user to the array and update Local Storage
-      const updatedUsers = [...storedUsers, newUser];
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(updatedUsers));
-
-      // Show success message and switch to login view
-      setSuccessMessage(
-        `Account created successfully for ${formData.name}! Please login to continue.`
-      );
+    } catch (error) {
+      setErrorMessage(error.message || "An error occurred. Please try again.");
       setIsLoading(false);
-      setTimeout(() => {
-        setIsLoginView(true);
-        setFormData({
-          name: "",
-          email: formData.email,
-          password: "",
-          confirmPassword: "",
-        });
-      }, 2000);
     }
   };
 

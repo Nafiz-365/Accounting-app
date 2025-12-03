@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   PieChart,
   Building2,
@@ -12,8 +12,9 @@ import {
   Eye,
   EyeOff,
 } from "lucide-react";
-import { StatCard, NetIncomeTrendChart } from "../utils/Utils";
-import { useCurrency } from "../contexts/CurrencyContext";
+import { StatCard } from "../components/cards/StatCard";
+import { NetIncomeTrendChart } from "../components/charts/NetIncomeTrendChart";
+import { CurrencyContext } from "../contexts/CurrencyContext";
 
 const Dashboard = ({
   getTotalAssets,
@@ -24,7 +25,7 @@ const Dashboard = ({
   accounts,
   t,
 }) => {
-  const { formatAmount, formatNumber } = useCurrency();
+  const { formatAmount, formatNumber } = useContext(CurrencyContext);
   const [showDetailedChart, setShowDetailedChart] = useState(true);
   const [highlightProfitability, setHighlightProfitability] = useState(true);
   const totalAssets = getTotalAssets();

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import {
   Scale,
   Search,
@@ -16,10 +16,10 @@ import {
   FileText,
   BarChart3,
 } from "lucide-react";
-import { useCurrency } from "../contexts/CurrencyContext";
+import { CurrencyContext } from "../contexts/CurrencyContext";
 
 const TrialBalance = ({ trialBalanceData, t }) => {
-  const { formatAmount, formatNumber } = useCurrency();
+  const { formatAmount, formatNumber } = useContext(CurrencyContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [sortBy, setSortBy] = useState("name");

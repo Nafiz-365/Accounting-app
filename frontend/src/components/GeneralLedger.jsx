@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   BookOpen,
   TrendingUp,
@@ -14,7 +14,7 @@ import {
   Target,
   Printer,
 } from "lucide-react";
-import { useCurrency } from "../contexts/CurrencyContext";
+import { CurrencyContext } from "../contexts/CurrencyContext";
 
 const GeneralLedger = ({
   accounts,
@@ -23,7 +23,7 @@ const GeneralLedger = ({
   balances,
   t,
 }) => {
-  const { formatAmount, formatNumber } = useCurrency();
+  const { formatAmount, formatNumber } = useContext(CurrencyContext);
   const [showDetails, setShowDetails] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");

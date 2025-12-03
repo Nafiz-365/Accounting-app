@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   TrendingUp,
   TrendingDown,
@@ -8,10 +8,10 @@ import {
   AlertCircle,
   Printer,
 } from "lucide-react";
-import { useCurrency } from "../contexts/CurrencyContext";
+import { CurrencyContext } from "../contexts/CurrencyContext";
 
 const IncomeStatement = ({ accounts, balances, incomeStatement, t }) => {
-  const { formatAmount, formatNumber } = useCurrency();
+  const { formatAmount, formatNumber } = useContext(CurrencyContext);
   const { revenue, expenses, netIncome } = incomeStatement;
 
   const revenueAccounts = accounts.filter(

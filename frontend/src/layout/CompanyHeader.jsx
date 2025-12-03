@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Building2,
   Calculator,
@@ -13,10 +13,10 @@ import UserProfile from "../components/UserProfile";
 import UserSettings from "../components/UserSettings";
 import CurrencySelector from "../components/CurrencySelector";
 import RealTimeClock from "../components/RealTimeClock";
-import { useCurrency } from "../contexts/CurrencyContext";
+import { CurrencyContext } from "../contexts/CurrencyContext";
 
 const CompanyHeader = ({ theme, user }) => {
-  const { currency, setCurrency } = useCurrency();
+  const { currency, setCurrency } = useContext(CurrencyContext);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
