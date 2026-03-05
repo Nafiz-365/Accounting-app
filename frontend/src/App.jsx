@@ -819,4 +819,5 @@ const SmartAccountingManager = () => {
     );
 };
 
+
 export default SmartAccountingManager;
